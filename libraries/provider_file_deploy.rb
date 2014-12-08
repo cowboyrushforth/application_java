@@ -29,7 +29,7 @@ class Chef
           @deploy_resource = new_resource
           @new_resource = Chef::Resource::File.new(@deploy_resource.name)
           @new_resource.path ::File.join(@deploy_resource.destination, ::File.basename(@deploy_resource.repository))
-          @new_resource.content @deploy_resource.repository
+          @new_resource.content ::File.open(@deploy_resource.repository).read
 #          unless @deploy_resource.revision == "HEAD"
 #            @new_resource.checksum @deploy_resource.revision
 #          end
