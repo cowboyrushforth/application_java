@@ -30,9 +30,9 @@ class Chef
           @new_resource = Chef::Resource::File.new(@deploy_resource.name)
           @new_resource.path ::File.join(@deploy_resource.destination, ::File.basename(@deploy_resource.repository))
           @new_resource.content @deploy_resource.repository
-          unless @deploy_resource.revision == "HEAD"
-            @new_resource.checksum @deploy_resource.revision
-          end
+#          unless @deploy_resource.revision == "HEAD"
+#            @new_resource.checksum @deploy_resource.revision
+#          end
           @new_resource.owner @deploy_resource.user
           @new_resource.group @deploy_resource.group
           provider = @new_resource.provider
@@ -45,10 +45,11 @@ class Chef
         end
 
         def target_revision
-          unless @new_resource.checksum
-            action_sync
-          end
-          @target_revision ||= @new_resource.checksum
+#          unless @new_resource.checksum
+#            action_sync
+#          end
+#          @target_revision ||= @new_resource.checksum
+          @target_revision = @deploy_resource.revision
         end
         alias :revision_slug :target_revision
 
@@ -56,7 +57,7 @@ class Chef
           create_dir_unless_exists(@deploy_resource.destination)
           purge_old_staged_files
           action_create
-          @new_resource.checksum checksum(@new_resource.path)
+ #         @new_resource.checksum checksum(@new_resource.path)
         end
 
         def set_content

@@ -30,11 +30,9 @@ class Chef
           @new_resource = Chef::Resource::RemoteFile.new(@deploy_resource.name)
           @new_resource.path ::File.join(@deploy_resource.destination, ::File.basename(@deploy_resource.repository))
           @new_resource.source @deploy_resource.repository
-
-#          unless @deploy_resource.revision == "HEAD"
-#            @new_resource.checksum @deploy_resource.revision
-#          end
-          
+          unless @deploy_resource.revision == "HEAD"
+            @new_resource.checksum @deploy_resource.revision
+          end
           @new_resource.owner @deploy_resource.user
           @new_resource.group @deploy_resource.group
           @action = action
@@ -46,9 +44,9 @@ class Chef
         end
 
         def target_revision
-          #unless @new_resource.checksum
+          unless @new_resource.checksum
             action_sync
-          #end
+          end
           @target_revision ||= @new_resource.checksum
         end
         alias :revision_slug :target_revision
