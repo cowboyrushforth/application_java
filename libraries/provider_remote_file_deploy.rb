@@ -46,9 +46,9 @@ class Chef
         end
 
         def target_revision
-          unless @new_resource.checksum
+          #unless @new_resource.checksum
             action_sync
-          end
+          #end
           @target_revision ||= @new_resource.checksum
         end
         alias :revision_slug :target_revision
